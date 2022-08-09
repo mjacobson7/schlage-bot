@@ -6,7 +6,7 @@ const dotenv = require("dotenv");
 const cron = require('node-cron');
 
 
-cron.schedule('*/5 * * * *', () => {
+cron.schedule('*/5 * * * *', async () => {
   console.log('Running Cron Job');
   dotenv.config();
   const browser = await puppeteer.launch();
