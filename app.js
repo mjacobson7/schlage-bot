@@ -3,8 +3,10 @@ const StealthPlugin = require("puppeteer-extra-plugin-stealth");
 puppeteer.use(StealthPlugin());
 const sgMail = require("@sendgrid/mail");
 const dotenv = require("dotenv");
+const cron = require('node-cron');
 
-(async () => {
+
+cron.schedule('*/5 * * * *', () => {
   dotenv.config();
   const browser = await puppeteer.launch();
   const page = await browser.newPage();
@@ -32,7 +34,8 @@ const dotenv = require("dotenv");
   }
 
   await browser.close();
-})();
+}, { scheduled: true, timezone: "America/Denver" });
+
 
 const sendEmail = (store, url) => {
   sgMail.setApiKey(process.env.EMAIL_KEY);
